@@ -1,0 +1,35 @@
+package org.drools.example.simple;
+import pl.linuxpolska.drools.simple.model.Customer;
+import pl.linuxpolska.drools.simple.model.CustomerType;
+
+rule "Customer low"
+no-loop 
+when
+	$c : Customer( salary <= 1000)
+then
+	modify( $c ) { 
+		setType(CustomerType.LOW)
+	};
+end
+
+
+rule "Customer NORMAL"
+no-loop 
+when
+	$c : Customer( salary > 1000, salary <= 9000 )
+then
+	modify( $c ) { 
+		setType(CustomerType.NORMAL)
+	};
+end
+
+
+rule "Customer VIP"
+no-loop 
+when
+	$c : Customer( salary > 9000)
+then
+	modify( $c ) { 
+		setType(CustomerType.VIP)
+	};
+end

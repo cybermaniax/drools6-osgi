@@ -1,0 +1,109 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>pl.linuxpolska.drools</groupId>
+	<artifactId>drools6-osgi</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>OSGI Drool 6</name>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<osgi.bundle.activator></osgi.bundle.activator>
+		<osgi.import.package>!*</osgi.import.package>
+		<osgi.private.package></osgi.private.package>
+		<osgi.export.package>!*</osgi.export.package>
+	</properties>
+
+	<modules>
+		<module>features</module>
+		<module>simple-rule</module>
+		<module>simple-blueprint</module>
+		<module>rule-blueprint-camel</module>
+	</modules>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- define drools BOM -->
+			<dependency>
+				<groupId>org.drools</groupId>
+				<artifactId>drools-bom</artifactId>
+				<type>pom</type>
+				<version>${drools.version}</version>
+				<scope>import</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>org.apache.felix.framework</artifactId>
+				<version>${felix.framework.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.testng</groupId>
+				<artifactId>testng</artifactId>
+				<version>6.1.1</version>
+				<scope>test</scope>
+			</dependency>
+
+
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-simple</artifactId>
+				<version>1.7.10</version>
+				<scope>test</scope>
+			</dependency>
+			
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.3</version>
+					<configuration>
+						<source>1.6</source>
+						<target>1.6</target>
+						<encoding>${project.build.sourceEncoding}</encoding>
+						<optimize>true</optimize>
+					</configuration>
+				</plugin>
+
+
+				<plugin>
+					<groupId>org.apache.felix</groupId>
+					<artifactId>maven-bundle-plugin</artifactId>
+					<version>2.5.0</version>
+					<extensions>true</extensions>
+					<configuration>
+						<instructions>
+							<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+							<Bundle-Name>${project.name}</Bundle-Name>
+							<Bundle-Activator>${osgi.bundle.activator}</Bundle-Activator>
+							<Import-Package>${osgi.import.package}</Import-Package>
+							<Private-Package>${osgi.private.package}</Private-Package>
+							<Export-Package>${osgi.export.package}</Export-Package>
+						</instructions>
+					</configuration>
+				</plugin>
+			</plugins>
+
+		</pluginManagement>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>community</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<drools.version>6.2.0.Final</drools.version>
+				<felix.framework.version>4.2.1</felix.framework.version>
+			</properties>
+		</profile>
+	</profiles>
+</project>

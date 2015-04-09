@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:kie="http://drools.org/schema/kie-aries-blueprint/1.0.0"
+	xsi:schemaLocation="
+           http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0
+           http://drools.org/schema/kie-aries-blueprint/1.0.0 http://drools.org/schema/kie-aries-blueprint/1.0.0">
+
+	<bean id="CustomerUtil" class="pl.linuxpolska.drools.simple.osgi.Utils" />
+
+
+	<!-- Camel Route -->
+	<camelContext xmlns="http://camel.apache.org/schema/blueprint">
+
+		<route trace="false" id="testRoute">
+			<from uri="timer:test?period=10s&amp;delay=10s" />
+			<bean method="customer" ref="CustomerUtil" />
+			<to uri="kie:simpleRuleKSession?action=insertBody" />
+		</route>
+
+		<route trace="false" id="testRunCommand">
+			<from uri="timer:RunCommandTimer?period=15s&amp;delay=10s" />
+			<bean method="customer" ref="CustomerUtil" />
+			<bean method="insertAndFireAll" ref="CustomerUtil" />
+			<to uri="kie:simpleRuleKSession?action=execute" />
+		</route>
+
+	</camelContext>
+
+</blueprint>
