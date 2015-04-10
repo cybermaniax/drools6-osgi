@@ -6,9 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.drools.core.impl.StatelessKnowledgeSessionImpl;
-import org.kie.api.KieServices;
 import org.kie.api.command.Command;
-import org.kie.api.runtime.CommandExecutor;
 import org.kie.api.runtime.ExecutionResults;
 import org.kie.internal.command.CommandFactory;
 import org.slf4j.Logger;
@@ -30,24 +28,15 @@ public class SimpleRuleBean {
 	/**
 	 * StatelessKieSession
 	 */
-	private CommandExecutor ksession;
+	private StatelessKnowledgeSessionImpl ksession;
 
 	/**
 	 * 
 	 */
 	public void start() throws Exception {
-		StatelessKnowledgeSessionImpl x = (StatelessKnowledgeSessionImpl)ksession;
-		Class<?> old = x.getKnowledgeBase().getRootClassLoader().loadClass("pl.linuxpolska.drools.simple.model.Customer");
-		
-		logger.info("SimpleRuleBean start {}",Customer.class.getClassLoader());
-		logger.info("SimpleRuleBean start {}",x.getKnowledgeBase().getRootClassLoader());
-		
-		KieServices ks = KieServices.Factory.get();
-		logger.info("SimpleRuleBean start {}",ks.getRepository().getDefaultReleaseId());
-		
 		Customer customer = customerLow();
 
-		logger.info("KieSession fireAllRules. {}", customer);
+		logger.info("KieSession fireAllRules. {}");
 
 		List<Command<?>> commands = new ArrayList<Command<?>>();
 
@@ -68,7 +57,7 @@ public class SimpleRuleBean {
 	 * 
 	 * @param kieSession
 	 */
-	public void setKieSession(CommandExecutor kieSession) {
+	public void setKieSession(StatelessKnowledgeSessionImpl kieSession) {
 		this.ksession = kieSession;
 	}
 

@@ -27,6 +27,13 @@ public class Customer implements Serializable {
 
 	/**
 	 * 
+	 */
+	public Customer() {
+		super();
+	}
+
+	/**
+	 * 
 	 * @param salary
 	 */
 	public Customer(int salary) {
