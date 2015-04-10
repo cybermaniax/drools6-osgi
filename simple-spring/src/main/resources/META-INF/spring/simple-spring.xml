@@ -1,0 +1,36 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:kie="http://drools.org/schema/kie-spring"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://drools.org/schema/kie-spring http://drools.org/schema/kie-spring.xsd">
+
+	<bean id="kiePostProcessor"
+		class="org.drools.osgi.spring.OsgiKModuleBeanFactoryPostProcessor" />
+
+	<kie:kmodule id="id-kmodule">
+		<kie:kbase name="SimpleRuleKBase" default="true"
+			packages="pl.linuxpolska.drools.simple.model">
+			<kie:ksession name="simpleRuleKSession" type="stateless"
+				default="true" listeners-ref="debugListeners">
+			</kie:ksession>
+		</kie:kbase>
+	</kie:kmodule>
+
+
+	<bean id="DebugAgendaEventListener"
+		class="pl.linuxpolska.drools.simple.osgi.DebugAgendaEventListener" />
+	<bean id="DebugRuleRuntimeEventListener"
+		class="pl.linuxpolska.drools.simple.osgi.DebugRuleRuntimeEventListener" />
+
+	<kie:eventListeners id="debugListeners">
+		<kie:agendaEventListener ref="DebugAgendaEventListener" />
+		<kie:ruleRuntimeEventListener ref="DebugRuleRuntimeEventListener" />
+		<kie:processEventListener />
+	</kie:eventListeners>
+
+
+	<bean class="pl.linuxpolska.drools.simple.osgi.SimpleRuleBean"
+		init-method="start">
+		<property name="ksession" ref="simpleRuleKSession" />
+	</bean>
+</beans>

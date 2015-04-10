@@ -1,0 +1,79 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>pl.linuxpolska.drools</groupId>
+		<artifactId>drools6-osgi</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	<artifactId>simple-spring</artifactId>
+	<name>OSGI Drool 6 :: Simple Rule Spring</name>
+
+	<packaging>bundle</packaging>
+
+	<properties>
+		<osgi.private.package>
+			pl.linuxpolska.drools.simple.osgi,
+			pl.linuxpolska.drools.simple.model
+		</osgi.private.package>
+		<osgi.export.package></osgi.export.package>
+		<osgi.import.package>
+			org.slf4j;version="[1.6,2)",
+			org.kie.api.*;version="[6.0,7)",
+			org.kie.internal.command;version="[6.0,7)",
+			org.drools.core.impl;version="[6.0,7)",
+			org.drools.osgi.spring;version="[6.0,7)",
+		</osgi.import.package>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.kie</groupId>
+			<artifactId>kie-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>drools-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>drools-compiler</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>drools-osgi-integration</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.framework</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.10</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+</project>

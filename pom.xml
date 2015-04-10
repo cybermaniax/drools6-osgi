@@ -19,6 +19,7 @@
 		<module>features</module>
 		<module>simple-rule</module>
 		<module>simple-blueprint</module>
+		<module>simple-spring</module>
 		<module>rule-blueprint-camel</module>
 	</modules>
 
